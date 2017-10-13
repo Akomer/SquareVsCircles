@@ -9,16 +9,22 @@ public class PlayerController : MonoBehaviour
     public PlayerHand hand;
     private float jumpForce = 5;
     private float moveForce = 8;
-    
 
-    private void Start()
+    private bool inTheAir;
+    private IJumpHandler jumpHandler;
+
+    private void Awake()
     {
         player = GetComponent<Rigidbody2D>();
+        jumpHandler = JumpNTimesHandler.DoubleJump();
     }
 
-    public void Jump()
+    public void JumpCommand()
     {
-        player.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        if (jumpHandler.CanJump())
+        {
+            Jump();
+        }
     }
 
     public void SideForce(float input)
@@ -32,8 +38,19 @@ public class PlayerController : MonoBehaviour
         hand.UseWeapon();
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        jumpHandler.ResetState();
+    }
+
     private void UpdatePlayerForwardDirection()
     {
         transform.localRotation = player.velocity.x < 0 ? Quaternion.Euler(0f, 180f, 0f) : Quaternion.identity;
+    }
+
+    private void Jump()
+    {
+        jumpHandler.Jump();
+        player.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 }

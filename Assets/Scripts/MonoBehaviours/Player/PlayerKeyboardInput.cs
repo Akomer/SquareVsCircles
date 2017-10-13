@@ -27,7 +27,7 @@ public class PlayerKeyboardInput : MonoBehaviour {
 
         if (Input.GetButtonDown("Jump"))
         {
-            playerController.Jump();
+            playerController.JumpCommand();
         }
 	}
 }
