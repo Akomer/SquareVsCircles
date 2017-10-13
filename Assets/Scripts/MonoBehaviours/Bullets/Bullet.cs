@@ -17,9 +17,7 @@ public class Bullet : MonoBehaviour
     public void ShootOut(Vector3 direction)
     {
         transform.rotation = Quaternion.Euler(direction);
-        Debug.Log($"{speed}");
-        Debug.Log($"{transform.forward}");
-        body.AddForce(Vector2.right * speed, ForceMode2D.Impulse);
+        body.AddForce(direction * speed, ForceMode2D.Impulse);
     }
 
     private void SelfDestroy()

@@ -24,10 +24,16 @@ public class PlayerController : MonoBehaviour
     public void SideForce(float input)
     {
         player.AddForce(Vector2.right * moveForce * input, ForceMode2D.Force);
+        UpdatePlayerForwardDirection();
     }
 
     public void Shoot()
     {
         hand.UseWeapon();
+    }
+
+    private void UpdatePlayerForwardDirection()
+    {
+        transform.localRotation = player.velocity.x < 0 ? Quaternion.Euler(0f, 180f, 0f) : Quaternion.identity;
     }
 }

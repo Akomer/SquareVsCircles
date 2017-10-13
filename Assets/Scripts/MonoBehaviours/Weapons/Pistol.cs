@@ -22,7 +22,7 @@ public class Pistol : Weapon
         timeStampForFire = Time.time + fireDelay;
         var bulletInstance = Instantiate<Bullet>(bulletPrefab);
         bulletInstance.transform.localPosition = transform.position;
-        bulletInstance.ShootOut(transform.forward);
+        bulletInstance.ShootOut(transform.right);
     }
 
     private bool ReadyToFire()
